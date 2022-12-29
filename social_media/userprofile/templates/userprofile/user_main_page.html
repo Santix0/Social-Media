@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request.user.username }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+    {% include 'inc/_nav.html' %}
+    <div class="model-body">
+        <div class="d-flex text-black">
+            <div class="flex-shrink-0">
+                <img class="img-fluid img-thumbnail mb-3" src="{{ user.avatar.url }}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <p class="fw-normal mb-1 ">{{ user.first_name }} {{ user.last_name }}</p>
+                <span>
+                    <a class="strached-link link-secondary" href="{% url 'all_users_information' user.id %}" style="text-decoration: None;">See all information</a>
+                </span>
+                {% if request.user.id != user.id %}
+                    <span>
+                        <a class="btn btn-dark" href="{% url 'follow_to_user' user.id %}">Follow</a>
+                    </span>
+                    <span>
+                        <a class="btn btn-dark" href="{% url 'unfollow_from_user' user.id %}">Unfollow</a>
+                    </span>
+                {% endif %}
+                <span>
+                    <p><a class="strached-link link-secondary flex-normal mb-1" href="{% url 'get_all_followers' user.id %}" style="text-decoration: None;">Followers</a></p>
+                </span>
+            </div>
+        </div>
+    </div>
+    {% for photo in photos %}
+        <div class="modal-body card" style="width: 40rem; background: #F8F8FF;">
+            <div class="d-flex">
+                <img class="img-fluid rounded-circle border border-dark border-3" src="{{ user.avatar.url }}" alt="" width="50" height="50">
+                <p class="fw-normal">{{ photo.reference_to_user.first_name }} {{ photo.reference_to_user.last_name }}</p>
+            </div>
+            <p class="figure-caption">Date added: {{ photo.posted }}</p>
+            <p class="fw-normal">{{ photo.description }}</p>
+            <img class="img-thumbnail" src="{{ photo.img.url }}" alt="#" width="600" height="600">
+        </div>
+    {% endfor %}
+</body>
+</html>

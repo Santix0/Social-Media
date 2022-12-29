@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request.user.username }} followers</title>
+    {% load static %}
+    {% load tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_precense_of_users followers as precense_of_followers %}
+</head>
+<body>
+
+
+    {% include 'inc/_nav.html' %}
+
+    {% if precense_of_followers %}
+    <div class="model-body">
+        {% for follower in followers %}
+            <p class="display-6" style="text-align: center;">Follower of {{ follower.to_user.first_name }} {{ follower.to_user.last_name }}</p>
+            <div class="card" style="width: 25rem">
+                <div class="d-flex text-black">
+                    <div class="flex-shrink-0">
+                        <img class="img-fluid img-thumbnail mb-3" src="{% get_avatar follower.followed_user.id %}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p class="fw-normal">{{ follower }}</p>
+                        <a class="streched-link link-secondary" href="{% url 'user_main_page' follower.followed_user.id %}" style="text-decoration: None;">
+                            {{ follower.followed_user.username }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="modal-body">
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p>User hasn't followers</p>
+            </blockquote>
+        </figure>
+    </div>
+    {% endif %}
+</body>
+</html>

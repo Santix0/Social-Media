@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ request.user.username }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+    {% include 'inc/_nav.html' %}
+    <div class="modal-body">
+        <div class="text-black d-flex">
+            <div class="flex-shrink-0">
+                <img class="img-fluid" src="{{ user.avatar.url }}" alt="" style="width: 180px; border-radius: 10px;">
+            </div>
+            <div class="flex-grow-1 ms-3">
+                <p class="mb-1">{{ user.first_name }} {{ user.last_name }}</p>
+                <p class="mb-1">Username: {{ user.username }}</p>
+            </div>
+        </div>
+        <p class="fw-normal">Bio: {{ user.bio }}</p>
+        <p class="fw-normal">Birthday: {{ user.birthday }}</p>
+        <p class="fw-normal">Phone number: {{ user.phone_number }}</p>
+        <p class="fw-normal">Gender: {{ user.gender }}</p>
+        <p class="fw-normal">Place of work: {{ user.place_of_work }}</p>
+        <p class="fw-normal">Place of study: {{ user.place_of_study }}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    {% load static %}
+    {% load tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_precense_of_users users as precense_of_users%}
+</head>
+<body>
+    {% include 'inc/_nav.html' %}
+
+    {% if precense_of_users %}
+        {% for user1 in users %}
+        <div class="card mt-2 mb-3" style="width: 20rem">
+            <div class="d-flex text-black">
+                <div class="flex-shrink-0">
+                    <img class="img-fluid rounded-circle border border-dark border-3" alt="media/default_avatar/default.jpg"  src="{{ user1.avatar.url }}" width="100" height="100">
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5 class="mb-1" >{{ user1.first_name }} {{ user1.last_name }}</h5>
+                    <a class="stretched-link text-info" href="{% url 'user_main_page' user1.id %}" style="text-decoration: None;">{{ user1.username }}</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% else %}
+    <div class="modal-body">
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p>User wasn't found</p>
+            </blockquote>
+            <figcaption class="figure-caption">
+                Check correct spelling of the name or username
+            </figcaption>
+        </figure>
+    </div>
+    {% endif %}
+</body>
+</html>
