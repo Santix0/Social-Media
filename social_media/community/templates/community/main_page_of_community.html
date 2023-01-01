@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ community.name }}</title>
+    {% load static %}
+    {% load community_tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_subscription request.user.id community.id as subscription %}
+    {% check_role request.user.id community.id as user_role %}
+</head>
+<body>
+    {% include 'inc/_nav.html' %}
+    <div class="model-body">
+        <div class="d-flex text-black">
+            <div class="flex-shrink-0">
+                <img class="img-fluid img-thumbnail mb-3" src="{{ community.avatar.url }}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+            </div>
+            <div class="flex-grow-1 ms-3">
+                    <p class="fw-normal mb-1">{{ community.name }}</p>
+                    <p class="figure-caption mb-1">{{ community.bio }}</p>
+                {% if subscription %}
+                    <span>
+                        <a class="btn btn-dark" href="{% url 'unfollow_community' community.id %}">Unfollow</a>
+                    </span>
+                {% else %}
+                    <span>
+                        <a class="btn btn-dark" href="{% url 'follow_community' community.id %}">Follow</a>
+                    </span>
+                {% endif %}
+                <div class="flex-grow-1">
+                    <span>
+                        <a class="streched-link link-secondary" href="{% url 'all_followers' community.id %}" style="text-decoration: None;">Followers</a>
+                    </span>
+                    {% if user_role %}
+                        <p><a class="streched-link link-info" href="{% url 'change_community_info' community.id %}" style="text-decoration: None;">Community settings</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% if user_role %}
+            <a class="btn btn-outline-dark" href="{% url 'add_post_to_community' community.id %}">Add post</a>
+        {% endif %}
+    </div>
+    {% for post in posts %}
+    <div class="model-body card mt-3" style="width: 400px; background: #F8F8FF;">
+        <div class="card-body">
+            <div class="d-flex">
+                <img class="img-fluid rounded-circle border border-dark border-3" src="{{ community.avatar.url }}" alt="media/default_avatar/default.jpg" width="80" height="80">
+                <p class="fw-normal">{{ community.name }}</p>
+                {% if user_role %}
+                    <a class="strached-link link-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
+                        ...
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'delete_post_of_community' post.id %}">Delete post</a></li>
+                        <li><a class="dropdown-item" href="{% url 'edit_post_of_community' post.id %}">Edit post</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+            <p class="figure-caption">Date posted: {{ post.date_posted }}</p>
+            <p class="fw-normal">{{ post.description }}</p>
+            <img class="img-thumbnail" src="{{ post.photo.url }}" alt="#" width="600px" height="600px">
+        </div>
+    {% endfor %}
+    </div>
+
+</body>
+</html>

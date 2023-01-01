@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Follows</title>
+    {% load static %}
+    {% load tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_precense_of_follows user as are_follows %}
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+    {% if are_follows %}
+        <div class="model-body card" style="width: 400px">
+            {% for follow in follows %}
+                <div class="card-body">
+                    <div class="d-flex text-black">
+                        <div class="flex-shrink-0">
+                            <img class="img-fluid img-thumbnail mb-3" src="{{ follow.to_user.avatar.url }}" alt="" style="width: 180px; border-radius: 10px;">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+
+                            <p><a class="streched-link link-dark" href="{% url 'user_main_page' follow.to_user.id %}" style="text-decoration: None;">{{ follow.to_user.first_name }} {{ follow.to_user.last_name }}</a></p>
+                            <p><a class="streched-link link-secondary" href="{% url 'user_main_page' follow.to_user.id %}" style="text-decoration: None;">{{ follow.to_user.username }}</a></p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>hello world</p>
+    {% endif %}
+
+</body>
+</html>

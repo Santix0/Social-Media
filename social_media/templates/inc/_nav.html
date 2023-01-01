@@ -14,6 +14,9 @@
                     <a class="nav-link active" href="{% url 'user_main_page' request.user.id %}">Account</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'communities_of_user' request.user.id %}">Communities</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" href="{% url 'user_logout' %}">Logout</a>
                 </li>
                 <li class="dropdown">
@@ -23,6 +26,9 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li>
                             <a href="{% url 'user_settings' %}" class="dropdown-item">Profile</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'community_in_settings' %}">Community</a>
                         </li>
                     </ul>
                 </li>

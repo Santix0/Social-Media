@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userprofile',
     'debug_toolbar',
+    'community',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

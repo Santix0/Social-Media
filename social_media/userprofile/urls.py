@@ -16,4 +16,9 @@ urlpatterns = [
     path('follow_to_user/<int:to_user_id>/', follow_to_user, name='follow_to_user'),
     path('unfollow_from_user/<int:from_user>/', unfollow_from_user, name='unfollow_from_user'),
     path('all_followers/<int:user_id>', get_all_followers, name='get_all_followers'),
+    path('add_post/<int:user_id>', add_post, name='add_post'),
+    path('delete_post/<int:post_id>', delete_post, name='delete_post'),
+    path('user_follow/<int:user_id>', user_follow, name='user_follow'),
+    path('edit_post/<int:pk>', ChangePost.as_view(), name='edit_post'),
+    path('edit_post/main_page', redirect_to_main_page, name='redirect_to_main_page_from_edit_post')
 ]

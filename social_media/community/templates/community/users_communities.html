@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Communities</title>
+    {% load static %}
+    {% load community_tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_precense_of_communities communities as precense_of_communities %}
+</head>
+<body>
+    {% include 'inc/_nav.html' %}
+    {% if precense_of_communities %}
+        <div class="model-body">
+            {% for community in communities %}
+                <div class="d-flex text-black">
+                    <div class="card" style="width: 25rem;">
+                        <div class="d-flex text-black">
+                            <div class="flex-shrink-0">
+                                <img class="img-fluid img-thumbnail mb-3" src="{{ community.followed_community.avatar.url }}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <a class="streched-link link-light" href="{% url 'main_page_of_community' community.followed_community.id %}" style="text-decoration: None;">{{ community.followed_community.name }}</a>
+                                <p class="figure-caption mb-1">{{ community.followed_community.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="modal-body">
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p>User don't follow communities</p>
+            </blockquote>
+        </figure>
+    </div>
+    {% endif %}
+
+</body>
+</html>

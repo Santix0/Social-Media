@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ comunity.name }} followers</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+
+    <div class="model-body card" style="width: 400px">
+        <div class="card-body">
+            {% for follower in follow_object %}
+                <div class="d-flex text-black">
+                    <div class="flex-shrink-0">
+                        <img class="img-fluid img-thumbnail mb-3" src="{{ follower.follower.avatar.url }}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <p><a class="streched-link link-dark" href="{% url 'user_main_page' follower.follower.id %}" style="text-decoration: None;">{{ follower.follower.first_name }} {{ follower.follower.last_name }}</a></p>
+                        <p><a class="streched-link link-secondary" href="{% url 'user_main_page' follower.follower.id %}" style="text-decoration: None;">{{ follower.follower.username }}</a></p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

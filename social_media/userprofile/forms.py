@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import *
 from .utils import *
 
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import *
+
 
 # form for sing up
 class SignUpForm(UserCreationForm):
@@ -95,11 +98,13 @@ class ChangeUserProfileForm(forms.ModelForm):
         'style': 'width: 350px',
     }))
 
-    phone_number = forms.IntegerField(label='Phone number', validators=[validation_of_number], widget=forms.NumberInput(attrs={
-        'placeholder': 'Enter phone number',
-        'class': 'form-control',
-        'style': 'width: 350px',
-    }))
+    phone_number = PhoneNumberField(widget=PhoneNumberPrefixWidget(
+        initial='RO',
+        attrs={
+            'class': 'form-control',
+            'style': 'width: 350px;',
+        },
+    ))
 
     bio = forms.CharField(label='Bio', widget=forms.TextInput(attrs={
         'placeholder': 'Add bio',
@@ -125,14 +130,92 @@ class ChangeUserProfileForm(forms.ModelForm):
         'style': 'width: 350px',
     }))
 
+    hobbies = forms.CharField(label='Hobbies', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your hobbies',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    relationship = forms.ChoiceField(label='Relationship', widget=forms.Select(attrs={
+        'placeholder': 'Choose your status',
+        'class': 'form-select',
+        'style': 'width: 350px',
+    }))
+
+    political_views = forms.CharField(label='Political_views', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your political_views',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    religion = forms.CharField(label='Religion', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter you religion',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    favorite_music = forms.CharField(label='Favorite music', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your favorite music',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    favorite_movies = forms.CharField(label='Favorite movies', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your favorite movies',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    favorite_books = forms.CharField(label='Favorite books', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your favorite books',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    town_of_living = forms.CharField(label='Hometown', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your hometown',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name',
                   'birthday', 'phone_number', 'bio',
-                  'gender', 'place_of_work', 'place_of_study'
+                  'gender', 'place_of_work', 'place_of_study',
+                  'hobbies', 'relationship', 'political_views',
+                  'religion', 'favorite_music', 'favorite_movies',
+                  'favorite_books', 'town_of_living',
                   )
 
 
 # Form for adding post
 class AddPostForm(forms.ModelForm):
-    Photo = forms.ImageField(label='Photo')
+    img = forms.ImageField(label='Photo', widget=forms.FileInput(attrs={
+        'placeholder': 'Attach photo',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    description = forms.CharField(label='Description', widget=forms.TextInput(attrs={
+        'placeholder': 'Description',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = Photo
+        fields = ('img', 'description',)
+
+
+class ChangePostForm(forms.ModelForm):
+    description = forms.CharField(label='Description', widget=forms.TextInput(attrs={
+        'placeholder': 'Description',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = Photo
+        fields = ('description',)
+

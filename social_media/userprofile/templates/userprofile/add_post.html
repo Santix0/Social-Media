@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add post</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="btn btn-dark" type="submit" value="submit">
+                <span>
+                    Add
+                </span>
+            </button>
+        </div>
+    </form>
+
+</body>
+</html>

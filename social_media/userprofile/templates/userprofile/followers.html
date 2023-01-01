@@ -7,7 +7,7 @@
     {% load tags %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
-    {% check_precense_of_users followers as precense_of_followers %}
+    {% check_precense_of_followers user.id as precense_of_followers %}
 </head>
 <body>
 
@@ -17,7 +17,7 @@
     {% if precense_of_followers %}
     <div class="model-body">
         {% for follower in followers %}
-            <p class="display-6" style="text-align: center;">Follower of {{ follower.to_user.first_name }} {{ follower.to_user.last_name }}</p>
+            <p class="display-6" style="text-align: center;">Followers of {{ follower.to_user.first_name }} {{ follower.to_user.last_name }}</p>
             <div class="card" style="width: 25rem">
                 <div class="d-flex text-black">
                     <div class="flex-shrink-0">

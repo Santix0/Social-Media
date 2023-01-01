@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>{{ request.user.username }}</title>
     {% load static %}
+    {% load tags %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_subscription request.user.id user.id as subscription %}
+    {% check_if_the_same_user user.id request.user.id as page_of_user %}
 </head>
 <body>
     {% include 'inc/_nav.html' %}
@@ -20,24 +23,42 @@
                     <a class="strached-link link-secondary" href="{% url 'all_users_information' user.id %}" style="text-decoration: None;">See all information</a>
                 </span>
                 {% if request.user.id != user.id %}
-                    <span>
-                        <a class="btn btn-dark" href="{% url 'follow_to_user' user.id %}">Follow</a>
-                    </span>
-                    <span>
-                        <a class="btn btn-dark" href="{% url 'unfollow_from_user' user.id %}">Unfollow</a>
-                    </span>
+                    {% if subscription %}
+                        <span>
+                            <a class="btn btn-dark" href="{% url 'unfollow_from_user' user.id %}">Unfollow</a>
+                        </span>
+                    {% else %}
+                        <span>
+                            <a class="btn btn-dark" href="{% url 'follow_to_user' user.id %}">Follow</a>
+                        </span>
+                    {% endif %}
                 {% endif %}
                 <span>
-                    <p><a class="strached-link link-secondary flex-normal mb-1" href="{% url 'get_all_followers' user.id %}" style="text-decoration: None;">Followers</a></p>
+                    <p><a class="strached-link link-secondary flex-normal" href="{% url 'get_all_followers' user.id %}" style="text-decoration: None;">Followers</a></p>
+                </span>
+                <span>
+                    <p><a class="strached-link link-secondary flex-normal mb-1" href="{% url 'user_follow' user.id %}" style="text-decoration: None;">Follows</a></p>
                 </span>
             </div>
         </div>
+        {% if request.user.id == user.id %}
+            <a class="btn btn-dark mb-2" href="{% url 'add_post' request.user.id %}">Add post</a>
+        {% endif %}
     </div>
     {% for photo in photos %}
-        <div class="modal-body card" style="width: 40rem; background: #F8F8FF;">
+        <div class="modal-body card mb-3" style="width: 40rem; background: #F8F8FF;">
             <div class="d-flex">
                 <img class="img-fluid rounded-circle border border-dark border-3" src="{{ user.avatar.url }}" alt="" width="50" height="50">
                 <p class="fw-normal">{{ photo.reference_to_user.first_name }} {{ photo.reference_to_user.last_name }}</p>
+                {% if page_of_user %}
+                    <a class="screched-link link-secondary dropdown-toggle  btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
+                        ...
+                    </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'delete_post' photo.id %}">Delete post</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit_post' photo.id %}">Edit post</a></li>
+                        </ul>
+                {% endif %}
             </div>
             <p class="figure-caption">Date added: {{ photo.posted }}</p>
             <p class="fw-normal">{{ photo.description }}</p>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community in settings</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+
+    <div class="model-body mb-2 mt-1 card" style="width: 250px; left: 40%; top: 50%;">
+        <div class="card-body" style="background: #F8F8FF;">
+            <div class="d-flex text-black">
+                <div class="flex-grow-1 ms-3">
+                    <span>
+                        <a class="strached-link link-light" href="{% url 'create_community' %}" style="text-decoration: None;">Create community</a>
+                    </span>
+                    <span>
+                        <p><a class="strached-link link-light" href="{% url 'user_is_owner' %}" style="text-decoration: None;">My communities</a></p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
