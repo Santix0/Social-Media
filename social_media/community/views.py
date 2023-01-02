@@ -157,3 +157,52 @@ class EditPost(UpdateView):
     form_class = EditPostForm
     template_name = 'community/edit_post.html'
     success_url = 'main_page'
+
+
+def add_comment(request, user_id: id, post_id: id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        post = Post.objects.get(id=post_id)
+        form = AddCommentToPostForm(request.POST)
+
+        if form.is_valid():
+            # saving form with commit=false in instance, because we need add commentator and post ids
+            instance = form.save(commit=False)
+            instance.commentator, instance.commented_post = user, post
+            instance.save()
+            return redirect('main_page')
+
+    else:
+        form = AddCommentToPostForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'community/add_comment_to_post.html', context)
+
+
+def show_all_comments_of_post(request, post_id: id):
+    # get all comments of the post, by post_id
+    comments = CommentsToCommunityPosts.objects.filter(commented_post=post_id)
+
+    context = {
+        'comments': comments,
+    }
+
+    return render(request, 'community/posts_comments.html', context)
+
+
+def delete_comment(request, comment_id: id):
+    # get comment by id and delete
+    CommentsToCommunityPosts.objects.get(id=comment_id).delete()
+
+    return redirect('main_page')
+
+
+class EditComment(UpdateView):
+    model = CommentsToCommunityPosts
+    form_class = EditCommentForm
+    success_url = 'main_page'
+    template_name = 'community/edit_comment.html'
+

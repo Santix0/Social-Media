@@ -219,3 +219,27 @@ class ChangePostForm(forms.ModelForm):
         model = Photo
         fields = ('description',)
 
+
+# form for adding comment to user's post
+class CommentToUserPostForm(forms.ModelForm):
+    comment = forms.CharField(label='Comment', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter comment',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = CommentToUserPost
+        fields = ('comment',)
+
+
+class EditCommentForm(forms.ModelForm):
+    comment = forms.CharField(label='Comment', widget=forms.TextInput(attrs={
+        'placeholder': 'Edit comment',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = CommentToUserPost
+        fields = ('comment',)

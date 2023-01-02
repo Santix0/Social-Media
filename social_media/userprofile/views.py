@@ -230,3 +230,52 @@ class ChangePost(UpdateView):
     form_class = ChangePostForm
     template_name = 'userprofile/change_post.html'
     success_url = 'main_page'
+
+
+# function that add comment to user's post
+def add_comment_to_post(request, user_id: id, post_id: id):
+    if request.method == 'POST':
+        user = User.objects.get(id=user_id)
+        post = Photo.objects.get(id=post_id)
+        form = CommentToUserPostForm(request.POST)
+
+        if form.is_valid():
+            # saving form in 'instance' attr with commit=false, because we need add post_id and user_id
+            instance = form.save(commit=False)
+            instance.commentator, instance.commented_post = user, post
+            instance.save()
+
+            return redirect('main_page')
+
+    else:
+        form = CommentToUserPostForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'userprofile/comment_to_user_post.html', context)
+
+
+def show_comments_of_post(request, post_id: id):
+    comments = CommentToUserPost.objects.filter(commented_post=post_id)
+
+    context = {
+        'comments': comments,
+    }
+
+    return render(request, 'userprofile/all_posts_comments.html', context)
+
+
+def delete_comment(request, comment_id: id):
+    # get comment by id and delte
+    CommentToUserPost.objects.get(id=comment_id).delete()
+
+    return redirect('main_page')
+
+
+class EditComment(UpdateView):
+    model = CommentToUserPost
+    form_class = EditCommentForm
+    success_url = 'main_page'
+    template_name = 'userprofile/edit_comment.html'

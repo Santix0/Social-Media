@@ -19,4 +19,9 @@ urlpatterns = [
     path('delete_post_of_community/<int:post_id>', delete_post_of_community, name='delete_post_of_community'),
     path('edit_post_of_community/<int:pk>', EditPost.as_view(), name='edit_post_of_community'),
     path('edit_post_of_community/main_page', redirect_to_main_page, name='redirect_to_main_page_from_edit'),
+    path('add_comment_to_post/<int:user_id>/<int:post_id>', add_comment, name='add_comment_to_community_post'),
+    path('view_comments_of_post/<int:post_id>', show_all_comments_of_post, name='view_comments_of_post'),
+    path('delete_comment/<int:comment_id>', delete_comment, name='delete_comment_from_community_post'),
+    path('edit_comment/<int:pk>', EditComment.as_view(), name='edit_comment_from_community_post'),
+    path('edit_comment/main_page', redirect_to_main_page, name='redirect_to_main_page_from_eidt_comment_community'),
 ]

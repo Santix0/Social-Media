@@ -62,6 +62,8 @@
             <p class="figure-caption">Date posted: {{ post.date_posted }}</p>
             <p class="fw-normal">{{ post.description }}</p>
             <img class="img-thumbnail" src="{{ post.photo.url }}" alt="#" width="600px" height="600px">
+            <a class="streched-link link-secondary" href="{% url 'add_comment_to_community_post' request.user.id post.id %}" style="text-decoration: None;">Add comment</a>
+            <a class="streched-link link-secondary" href="{% url 'view_comments_of_post' post.id %}" style="text-decoration: None;">View comments</a>
         </div>
     {% endfor %}
     </div>

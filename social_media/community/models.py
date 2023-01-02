@@ -35,3 +35,11 @@ class Followers(models.Model):
     role = models.CharField(max_length=50, choices=ROLES, default='Participant', blank=True)
     # community that is followed
     followed_community = models.ForeignKey(Community, on_delete=models.CASCADE)
+
+
+class CommentsToCommunityPosts(models.Model):
+    # user that write comment
+    commentator = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField('Comment', max_length=100)
+    # post that was commented
+    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)

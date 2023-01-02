@@ -63,6 +63,10 @@
             <p class="figure-caption">Date added: {{ photo.posted }}</p>
             <p class="fw-normal">{{ photo.description }}</p>
             <img class="img-thumbnail" src="{{ photo.img.url }}" alt="#" width="600" height="600">
+            <div class="flex-shrink-0">
+                <a class="streched-link link-secondary" href="{% url 'add_comment_to_post' request.user.id photo.id %}" style="text-decoration: None;">Add comment</a>
+                <a class="streched-link link-secondary" href="{% url 'view_posts_comments' photo.id %}" style="text-decoration: None;">View comments</a>
+            </div>
         </div>
     {% endfor %}
 </body>

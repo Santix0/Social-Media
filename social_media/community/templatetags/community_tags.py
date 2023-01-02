@@ -16,8 +16,10 @@ def check_precense_of_communities(communities: Community) -> bool:
 def check_subscription(follower, to_who_follow):
     follow = Followers.objects.filter(follower=follower, followed_community=to_who_follow)
 
-    if follow: return True
-    else: return False
+    if follow:
+        return True
+    else:
+        return False
 
 
 @register.simple_tag
@@ -29,3 +31,14 @@ def check_role(user: User, community: Community) -> bool:
             return True
     except (Exception,):
         return False
+
+
+@register.simple_tag
+def check_precense_of_comments(comments: CommentsToCommunityPosts) -> bool:
+    return True if comments else False
+
+
+@register.simple_tag
+def check_if_users_comment(user_id: id,
+                           commentator_id):  # user_id is id of user that on site at moment, commentator id is id of user that left comment
+    return True if user_id == commentator_id else False

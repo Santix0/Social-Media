@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View comments</title>
+    {% load static %}
+    {% load community_tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_precense_of_comments comments as precense_of_comments %}
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+
+    {% if precense_of_comments %}
+        <div class="model-body card" style="width: 300px; background: #F8F8FF;">
+            {% for comment in comments %}
+                <div class="card-body">
+                    <div class="d-flex">
+                        <img class="img-fluid rounded-circle border border-dark border-3" src="{{ comment.commentator.avatar.url }}" alt="media/photos/default_avatar/default.jpg" width="50" height="50">
+                        <p class="fw-normal">{{ comment.commentator.first_name }} {{ comment.commentator.last_name }}</p>
+                        {% check_if_users_comment request.user.id comment.commentator.id as users_comment %}
+                        {% if users_comment %}
+                            <a class="streched-link link-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
+                                ...
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'delete_comment_from_community_post' comment.id %}">Delete</a></li>
+                                <li><a class="dropdown-item" href="{% url 'edit_comment_from_community_post' comment.id %}">Edit</a></li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <p class="fw-normal">{{ comment.comment }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <div class="model-body">
+                <figure class="text-center">
+                    <blockquote class="blockquote">
+                        <p>Post doesn't have comments</p>
+                    </blockquote>
+                </figure>
+            </div>
+        {% endif %}
+
+</body>
+</html>

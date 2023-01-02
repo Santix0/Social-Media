@@ -88,3 +88,27 @@ class EditPostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ('description',)
+
+
+class AddCommentToPostForm(forms.ModelForm):
+    comment = forms.CharField(label='Comment', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter comment',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = CommentsToCommunityPosts
+        fields = ('comment',)
+
+
+class EditCommentForm(forms.ModelForm):
+    comment = forms.CharField(label='Comment', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter comment',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = CommentsToCommunityPosts
+        fields = ('comment',)

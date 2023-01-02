@@ -27,6 +27,11 @@ class PhotoAdmin(admin.ModelAdmin):
     ...
 
 
+class CommentToUserPostAdmin(admin.ModelAdmin):
+    ...
+
+
+admin.site.register(CommentToUserPost, CommentToUserPostAdmin)
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(FollowToUser, FollowToUserAdmin)

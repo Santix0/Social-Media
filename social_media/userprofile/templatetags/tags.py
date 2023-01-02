@@ -55,3 +55,7 @@ def check_precense_of_follows(user: User):
 
     return True if follow_object else False
 
+
+@register.simple_tag
+def check_precense_of_comments(comments: CommentToUserPost) -> bool:
+    return True if comments else False

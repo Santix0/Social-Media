@@ -81,3 +81,11 @@ class FollowToUser(models.Model):
         user = User.objects.get(id=followed_user)
 
         return user.avatar.url
+
+
+class CommentToUserPost(models.Model):
+    # user that wrote comment
+    commentator = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.CharField('Comment', max_length=100)
+    # post that user comment
+    commented_post = models.ForeignKey(Photo, on_delete=models.CASCADE)
