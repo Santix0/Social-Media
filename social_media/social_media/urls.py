@@ -20,13 +20,13 @@ from django.conf import settings
 
 from userprofile.views import *
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('userprofile.urls')),
     path('', main_page, name='main_page'),
     path('__debug__/', include('debug_toolbar.urls')),
     path('community/', include('community.urls')),
+    # path('accounts/', include('allauth.urls'))
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

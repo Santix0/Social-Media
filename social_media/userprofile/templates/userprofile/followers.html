@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ request.user.username }} followers</title>
-    {% load static %}
     {% load tags %}
+    {% get_to_user followers as to_user %}
+    <meta charset="UTF-8">
+    <title>{{ to_user }} followers</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
-    {% check_precense_of_followers user.id as precense_of_followers %}
+    {% check_presence_of_followers user as presence_of_followers %}
+    <!--Get user first_name and last_name, that are get follows -->
+    {% get_to_user followers as to_user %}
 </head>
 <body>
 
-
     {% include 'inc/_nav.html' %}
 
-    {% if precense_of_followers %}
+    {% if presence_of_followers %}
     <div class="model-body">
+        <p class="display-6" style="text-align: center;">Followers of {{ to_user }}</p>
         {% for follower in followers %}
-            <p class="display-6" style="text-align: center;">Followers of {{ follower.to_user.first_name }} {{ follower.to_user.last_name }}</p>
             <div class="card" style="width: 25rem">
                 <div class="d-flex text-black">
                     <div class="flex-shrink-0">
-                        <img class="img-fluid img-thumbnail mb-3" src="{% get_avatar follower.followed_user.id %}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
+                        <img class="img-fluid img-thumbnail mb-3" src="{{ follower.followed_user.avatar.url }}" alt="media/default_avatar/default.jpg" style="width: 180px; border-radius: 10px;">
                     </div>
                     <div class="flex-grow-1 ms-3">
                         <p class="fw-normal">{{ follower }}</p>

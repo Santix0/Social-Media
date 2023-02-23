@@ -9,5 +9,3 @@ def validation_of_number(number: int) -> None:
             f'{number} is not valid',
             params={'number': number},
         )
-
-

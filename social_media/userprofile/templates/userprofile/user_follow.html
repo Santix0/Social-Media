@@ -7,7 +7,7 @@
     {% load tags %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
-    {% check_precense_of_follows user as are_follows %}
+    {% check_presence_of_follows user as are_follows %}
 </head>
 <body>
 
@@ -31,7 +31,13 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>hello world</p>
+    <div class="model-body">
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p>User doesn't follow anyone</p>
+            </blockquote>
+        </figure>
+    </div>
     {% endif %}
 
 </body>

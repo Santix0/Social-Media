@@ -1,7 +1,6 @@
 # urls that connected to user
-from django.urls import path
+from django.urls import path, register_converter
 from .views import *
-
 
 urlpatterns = [
     path('<int:user_id>/', user_main_page, name='user_main_page'),
@@ -21,9 +20,9 @@ urlpatterns = [
     path('user_follow/<int:user_id>', user_follow, name='user_follow'),
     path('edit_post/<int:pk>', ChangePost.as_view(), name='edit_post'),
     path('edit_post/main_page', redirect_to_main_page, name='redirect_to_main_page_from_edit_post'),
-    path('add_comment/<int:user_id>/<int:post_id>', add_comment_to_post, name='add_comment_to_post'),
-    path('view_posts_comments/<int:post_id>', show_comments_of_post, name='view_posts_comments'),
     path('delete_comment/<int:comment_id>', delete_comment, name='delete_comment_from_user_post'),
     path('edit_comment/<int:pk>', EditComment.as_view(), name='edit_comment_from_user_post'),
     path('edit_comment/main_page', redirect_to_main_page, name='redirect_to_main_page_from_edit_commet'),
+    path('comments_section/<int:post_id>', comments_under_post, name='comments_section'),
 ]
+

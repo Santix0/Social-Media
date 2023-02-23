@@ -47,23 +47,22 @@
     <div class="model-body card mt-3" style="width: 400px; background: #F8F8FF;">
         <div class="card-body">
             <div class="d-flex">
-                <img class="img-fluid rounded-circle border border-dark border-3" src="{{ community.avatar.url }}" alt="media/default_avatar/default.jpg" width="80" height="80">
+                <img class="img-fluid rounded-circle border border-dark border-3" src="{{ post.writer.avatar.url }}" alt="media/default_avatar/default.jpg" width="80" height="80">
                 <p class="fw-normal">{{ community.name }}</p>
                 {% if user_role %}
                     <a class="strached-link link-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
                         ...
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="{% url 'delete_post_of_community' post.id %}">Delete post</a></li>
+                        <li><a class="dropdown-item" href="{% url 'delete_post_of_community' post.id post.writer.id %}">Delete post</a></li>
                         <li><a class="dropdown-item" href="{% url 'edit_post_of_community' post.id %}">Edit post</a></li>
                     </ul>
                 {% endif %}
             </div>
-            <p class="figure-caption">Date posted: {{ post.date_posted }}</p>
+            <p class="figure-caption">Date posted: {{ post.posted }}</p>
             <p class="fw-normal">{{ post.description }}</p>
             <img class="img-thumbnail" src="{{ post.photo.url }}" alt="#" width="600px" height="600px">
-            <a class="streched-link link-secondary" href="{% url 'add_comment_to_community_post' request.user.id post.id %}" style="text-decoration: None;">Add comment</a>
-            <a class="streched-link link-secondary" href="{% url 'view_comments_of_post' post.id %}" style="text-decoration: None;">View comments</a>
+            <a class="streched-link link-secondary" href="{% url 'community_comment_section' post.id %}" style="text-decoration: None;">Comments</a>
         </div>
     {% endfor %}
     </div>

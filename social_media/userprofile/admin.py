@@ -23,7 +23,7 @@ class FollowToUserAdmin(admin.ModelAdmin):
     ...
 
 
-class PhotoAdmin(admin.ModelAdmin):
+class UserPostAdmin(admin.ModelAdmin):
     ...
 
 
@@ -32,7 +32,7 @@ class CommentToUserPostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CommentToUserPost, CommentToUserPostAdmin)
-admin.site.register(Photo, PhotoAdmin)
+admin.site.register(UserPost, UserPostAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(FollowToUser, FollowToUserAdmin)
 

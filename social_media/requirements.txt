@@ -1,0 +1,8 @@
+Django
+django-birthday
+Babel
+oauthlib
+Pillow
+psycopg2
+PyJWT
+python-dotenv

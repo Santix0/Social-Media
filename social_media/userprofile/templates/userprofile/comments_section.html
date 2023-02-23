@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment section</title>
+    {% load static %}
+    {% load tags %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+</head>
+<body>
+
+    {% include 'inc/_nav.html' %}
+    <div class="model-body card" style="width: 350px">
+        {% for comment in comments %}
+            <div class="card">
+                <div class="d-flex">
+                    <img class="img-fluid rounded-circle border border-dark border-3" src="{{ comment.commentator.avatar.url }}" alt="media/photos/default_avatar/default.jpg" width="50" height="50">
+                    <a class="streched-link link-secondary" href="{% url 'user_main_page' comment.commentator.id %}" style="text-decoration: None;">{{ comment.commentator.first_name }} {{ comment.commentator.last_name }}</a>
+                    {% if comment.commentator.id == request.user.id %}
+                        <a class="streched-link link-secondary dropdown-toggle" href="#" style="text-decoration: None;" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'delete_comment_from_user_post' comment.id %}" style="text-decoration: None;">Delete</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit_comment_from_user_post' comment.id %}" style="text-decoration: None;">Edit</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="flex-shrink-0">
+                    <p class="figure-caption">{{ comment.posted }}</p>
+                    <p class="fw-normal">{{ comment.comment }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="model-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-dark" value="submit" type="submit">
+                Comment
+            </button>
+        </form>
+    </div>
+</body>
+</html>

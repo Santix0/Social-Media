@@ -2,12 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Blog</title>
     {% load static %}
+    {% load tags %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
+    {% check_presence_of_posts posts as presence_posts %}
 </head>
 <body>
-  {% include 'inc/_nav.html' %}
+
+{% include 'inc/_nav.html' %}
+
+{% for posts in posts_list %}
+    {% for post in posts %}
+        <div class="model-body card mb-3" style="width: 40rem; background: #F8F8FF;">
+            <div class="d-flex">
+                <img class="img-fluid rounded-circle border border-dark border-3" src="{{ post.writer.avatar.url }}" alt="" width="50" height="50">
+                <p class="fw-normal">{{ post.writer }}</p>
+            </div>
+            <p class="figure-caption">Date added: {{ post.posted }}</p>
+            <p class="fw-normal">{{ post.description }}</p>
+            <img class="img-thumbnail" src="{{ post.photo.url }}" alt="" width="600" height="600">
+            <div class="flex-shrink-0">
+                <a class="streched-link link-secondary" href="{% url 'comments_section' post.id %}" style="text-decoration: None;">Comments</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor  %}
+
+
 </body>
 </html>

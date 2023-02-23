@@ -45,7 +45,7 @@ class AddPostForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Post
+        model = CommunityPost
         fields = (
             'photo', 'description',
         )
@@ -71,10 +71,23 @@ class ChangeCommunityInfoForm(forms.ModelForm):
         'style': 'width: 350px',
     }))
 
+    theme = forms.ChoiceField(label='Theme', choices=THEMES, widget=forms.Select(attrs={
+        'placeholder': 'Select theme of community',
+        'class': 'form-select',
+        'style': 'width: 350px',
+    }))
+
+    sub_theme = forms.CharField(label='Sub theme', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter sub theme of community',
+        'class': 'form-control',
+        'style': 'width: 350px'
+    }))
+
     class Meta:
         model = Community
         fields = (
             'name', 'bio', 'avatar',
+            'theme', 'sub_theme',
         )
 
 
@@ -86,7 +99,7 @@ class EditPostForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Post
+        model = CommunityPost
         fields = ('description',)
 
 
@@ -112,3 +125,36 @@ class EditCommentForm(forms.ModelForm):
     class Meta:
         model = CommentsToCommunityPosts
         fields = ('comment',)
+
+
+class CommunityChangeInformationForm(forms.ModelForm):
+    bio = forms.CharField(label='Bio', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter Bio',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    avatar = forms.ImageField(label='Photo', widget=forms.FileInput(attrs={
+        'placeholder': 'Attach photo',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    theme = forms.ChoiceField(label='Theme', choices=THEMES, widget=forms.Select(attrs={
+        'placeholder': 'Select theme',
+        'class': 'select-control',
+        'style': 'width: 350px',
+    }))
+
+    sub_theme = forms.CharField(label='Sub theme', widget=forms.TextInput(attrs={
+        'placeholder': 'Enter sub theme',
+        'class': 'form-control',
+        'style': 'width: 350px',
+    }))
+
+    class Meta:
+        model = Community
+        fields = (
+            'bio', 'avatar', 'theme',
+            'sub_theme',
+        )

@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ request.user.username }}</title>
+    <title>{{ user.username }}</title>
     {% load static %}
-    {% load tags %}
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}" type="text/css">
     <script src="{% static 'bootstrap/js/bootstrap.bundle.js' %}"></script>
-    {% check_subscription request.user.id user.id as subscription %}
-    {% check_if_the_same_user user.id request.user.id as page_of_user %}
 </head>
 <body>
     {% include 'inc/_nav.html' %}
@@ -45,27 +42,26 @@
             <a class="btn btn-dark mb-2" href="{% url 'add_post' request.user.id %}">Add post</a>
         {% endif %}
     </div>
-    {% for photo in photos %}
+    {% for post in posts %}
         <div class="modal-body card mb-3" style="width: 40rem; background: #F8F8FF;">
             <div class="d-flex">
                 <img class="img-fluid rounded-circle border border-dark border-3" src="{{ user.avatar.url }}" alt="" width="50" height="50">
-                <p class="fw-normal">{{ photo.reference_to_user.first_name }} {{ photo.reference_to_user.last_name }}</p>
-                {% if page_of_user %}
-                    <a class="screched-link link-secondary dropdown-toggle  btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
+                <p class="fw-normal">{{ post.writer.first_name }} {{ post.writer.last_name }}</p>
+                {% if request.user.id == user.id %}
+                    <a class="st    reched-link link-secondary dropdown-toggle  btn-sm" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="text-decoration: None;">
                         ...
                     </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{% url 'delete_post' photo.id %}">Delete post</a></li>
-                            <li><a class="dropdown-item" href="{% url 'edit_post' photo.id %}">Edit post</a></li>
+                            <li><a class="dropdown-item" href="{% url 'delete_post' post.id %}">Delete post</a></li>
+                            <li><a class="dropdown-item" href="{% url 'edit_post' post.id %}">Edit post</a></li>
                         </ul>
                 {% endif %}
             </div>
-            <p class="figure-caption">Date added: {{ photo.posted }}</p>
-            <p class="fw-normal">{{ photo.description }}</p>
-            <img class="img-thumbnail" src="{{ photo.img.url }}" alt="#" width="600" height="600">
+            <p class="figure-caption">Date added: {{ post.posted }}</p>
+            <p class="fw-normal">{{ post.description }}</p>
+            <img class="img-thumbnail" src="{{ post.photo.url }}" alt="#" width="600" height="600">
             <div class="flex-shrink-0">
-                <a class="streched-link link-secondary" href="{% url 'add_comment_to_post' request.user.id photo.id %}" style="text-decoration: None;">Add comment</a>
-                <a class="streched-link link-secondary" href="{% url 'view_posts_comments' photo.id %}" style="text-decoration: None;">View comments</a>
+                <a class="streched-link link-secondary" href="{% url 'comments_section' post.id %}" style="text-decoration: None;">Comments</a>
             </div>
         </div>
     {% endfor %}
